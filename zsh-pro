@@ -1,0 +1,2 @@
+export TERM_PROFILE=pro
+/bin/zsh

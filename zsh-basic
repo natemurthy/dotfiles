@@ -1,0 +1,2 @@
+export TERM_PROFILE=basic
+/bin/zsh
