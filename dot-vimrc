@@ -79,9 +79,8 @@ set wrap
 " Nathan's key mapping overrides
 " -----------------------------------------------------
 tnoremap <Esc> <C-\><C-n>   " swtich from TERMINAL mode to NORMAL
-
-" go back to previously opened file
-nmap ;6 <C-^><CR> 
+nmap ;n :set nonumber<CR>   " set nonumber
+nmap ;6 <C-^><CR>           " go back to previously opened file
 
 " Better split switching
 nnoremap <C-j> <C-W>j
