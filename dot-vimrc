@@ -10,6 +10,7 @@ Plugin 'VundleVim/Vundle.vim'        " obviously
 
 Plugin 'derekwyatt/vim-scala'
 Plugin 'rust-lang/rust.vim'
+Plugin 'sebastianmarkow/deoplete-rust'
 Plugin 'fatih/vim-go'
 Plugin 'sudar/comments.vim'
 Plugin 'scrooloose/nerdtree'
@@ -31,7 +32,7 @@ Plugin 'godoctor/godoctor.vim'
 Plugin 'sebdah/vim-delve'
 Plugin 'mileszs/ack.vim'
 Plugin 'davidhalter/jedi-vim'
-Plugin 'tomlion/vim-solidity'
+Plugin 'pangloss/vim-javascript'
 
 call vundle#end() 
 
@@ -50,11 +51,11 @@ set encoding=utf-8
 set expandtab
 "set foldmethod=indent
 set hidden
+set hlsearch
 set ic                  " ignores case in searches
 set incsearch           " searches as you type
 set laststatus=2        " Always display a status line at the bottom of the window 
 set mouse=a             " Enable mouse in a terminal for all modes
-set nohlsearch
 set nocompatible        " vim settings rather than vi settings
 set nosmartindent
 set number
@@ -109,7 +110,7 @@ autocmd FileType sh     setlocal sw=2 tabstop=2
 autocmd FileType yaml   setlocal sw=2 tabstop=2
 autocmd FileType proto  setlocal sw=2 tabstop=2
 autocmd FileType html   setlocal sw=4 tabstop=4
-autocmd FileType js     setlocal sw=4 tabstop=4
+autocmd FileType js     setlocal sw=2 tabstop=2
 
 
 " =============================================================================================
@@ -129,21 +130,19 @@ endfunction
 nmap ;b :call ToggleBackground()<CR>
 
 " Adjust background (light/dark) based on time of day
-" if 7 < strftime("%H") && strftime("%H") < 21
-"  set background=light
+"if 6 < strftime("%H") && strftime("%H") < 21
+  "set background=light
 "else
-"  set background=dark
+  "set background=dark
 "endif
 
-" Adjust background (light/dark) based on terminal profile selected
-if $TERM_PROFILE == 'pro'
-  set background=dark
-endif
-
+" Adjust background (ligh/dark) based on terminal profile
 if $TERM_PROFILE == 'basic'
   set background=light
 endif
-
+if $TERM_PROFILE == 'pro'
+  set background=dark
+endif
 
 
 " =============================================================================================
@@ -192,6 +191,9 @@ let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
 let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
 let g:deoplete#sources#go#use_cache = 1
 "let g:deoplete#sources#go#json_directory = '/path/to/data_dir'
+
+" deoplete-rust settings
+let g:deoplete#sources#rust#racer_binary='/Users/nmurthy/.cargo/bin/racer'
 
 " deoplete-python settings
 " }}}
