@@ -43,13 +43,13 @@ export GREP_OPTIONS='--color=always'
 # PATH settings
 # =============================================================================================
 
-export PATH=$PATH:/usr/local/bin
+export PATH=$PATH:/usr/local/bin:/sbin:/usr/sbin
 
 # Java/Scala
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_102.jdk/Contents/Home
-export PATH=$PATH:/Users/nmurthy/Tools/sbt-0.13.15/bin
-export PATH=$PATH:/Users/nmurthy/Tools/scala-2.12.2/bin
-export PATH=$PATH:/Users/nmurthy/Tools/apache-maven-3.3.9/bin
+export PATH=$PATH:/Users/nmurthy/Tools/sbt-1.2.1/bin
+export PATH=$PATH:/Users/nmurthy/Tools/scala-2.12.6/bin
+export PATH=$PATH:/Users/nmurthy/Tools/apache-maven-3.5.4/bin
 
 # Go
 export GOPATH=/Users/nmurthy/Gospace
@@ -60,15 +60,14 @@ export PATH=$PATH:$(go env GOPATH)/bin
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH:"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+#eval "$(pyenv init -)"
+#eval "$(pyenv virtualenv-init -)"
 
 # Rust
 source $HOME/.cargo/env
 
 # protoc
-export PATH=/Users/nmurthy/Tools/protoc-3.3.0-osx-x86_64/bin:$PATH
-
+export PATH=/Users/nmurthy/Tools/protoc-3.6.1-osx-x86_64/bin:$PATH
 
   
 #########################################
@@ -143,13 +142,24 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 # These are installed using homebrew
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh
-#bindkey '^[[A' history-substring-search-up
-#bindkey '^[[B' history-substring-search-down
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
 
 
 #test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 # fuzzy find is good to have
-#[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_COMPLETION_TRIGGER='``'
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# autojump
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+
+# SSH agent
+SSHAGENT='/usr/bin/ssh-agent'
+SSHAGENTARGS='-s'
+if [ -z "$SSH_AUTH_SOCK" -a -x "$SSHAGENT" ]; then
+    eval `$SSHAGENT $SSHAGENTARGS` > /dev/null
+    trap "kill $SSH_AGENT_PID" 0
+fi
 

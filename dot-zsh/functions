@@ -5,6 +5,7 @@
 # cmd line prompt
 function precmd {
   if [[ $USER == "nmurthy" ]]; then
+    # Company machine has a big lame immutable host name so don't include it
     PS1="%{$fg[cyan]%}%n%{$fg[default]%}:%1~%# "
   else 
     PS1="%{$fg[cyan]%}%n@%{$fg[default]%}%m:%1~%# "
@@ -12,7 +13,7 @@ function precmd {
 }
 
 # =============================================================================================
-# Helper functions
+# FZF helpers
 # =============================================================================================
 f() {
   vim $(fzf)
@@ -24,9 +25,52 @@ fd() {
   dir=$(find ${1:-.} -type d 2> /dev/null | fzf +m) && cd "$dir"
 }
 
+# fzf settings
+_fzf_complete_host() {
+  _fzf_complete '+m' "$@" < <(
+    command cat <(cat ~/.ssh/config /etc/ssh/ssh_config 2> /dev/null | command grep --color=never -i '^host' | command grep --color=never -v '*' | awk '{for (i = 2; i <= NF; i++) print $1 " " $i}') \
+        <(command grep --color=never -oE '^[[a-z0-9.,:-]+' ~/.ssh/known_hosts | tr ',' '\n' | tr -d '[' | awk '{ print $1 " " $1 }') \
+        <(command grep --color=never -v '^\s*\(#\|$\)' /etc/hosts | command grep --color=never -Fv '0.0.0.0') |
+        awk '{if (length($2) > 0) {print $2}}' | sort -u
+  )
+}
+
+_fzf_complete_scp() {
+  _fzf_complete '+m' "$@" < <(
+    command cat <(cat ~/.ssh/config /etc/ssh/ssh_config 2> /dev/null | command grep --color=never -i '^host' | command grep --color=never -v '*' | awk '{for (i = 2; i <= NF; i++) print $1 " " $i}') \
+        <(command grep --color=never -oE '^[[a-z0-9.,:-]+' ~/.ssh/known_hosts | tr ',' '\n' | tr -d '[' | awk '{ print $1 " " $1 }') \
+        <(command grep --color=never -v '^\s*\(#\|$\)' /etc/hosts | command grep --color=never -Fv '0.0.0.0') |
+        awk '{if (length($2) > 0) {print $2}}' | sort -u
+  )
+}
+
+_fzf_complete_ping() {
+  _fzf_complete '+m' "$@" < <(
+    command cat <(cat ~/.ssh/config /etc/ssh/ssh_config 2> /dev/null | command grep --color=never -i '^host' | command grep --color=never -v '*' | awk '{for (i = 2; i <= NF; i++) print $1 " " $i}') \
+        <(command grep --color=never -oE '^[[a-z0-9.,:-]+' ~/.ssh/known_hosts | tr ',' '\n' | tr -d '[' | awk '{ print $1 " " $1 }') \
+        <(command grep --color=never -v '^\s*\(#\|$\)' /etc/hosts | command grep --color=never -Fv '0.0.0.0') |
+        awk '{if (length($2) > 0) {print $2}}' | sort -u
+  )
+}
+
+
+# =============================================================================================
+# Misc elper functions
+# =============================================================================================
+
 gospace() {
   cd $GOPATH/src
   pwd
 }
 
+h () {
+  chroma --style=vim $1 | cat -n
+}
 
+kc () {
+  kafkacat -b broker1,broker2,broker3 "$@"
+}
+
+#kc () {
+  #/Users/nmurthy/Tools/kafka/bin/kafka-console-consumer.sh --bootstrap-server broker --topic "$@"
+#}
