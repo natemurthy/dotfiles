@@ -82,6 +82,7 @@ set wrap
 tnoremap <Esc> <C-\><C-n>   " swtich from TERMINAL mode to NORMAL
 nmap ;n :set nonumber<CR>   " set nonumber
 nmap ;6 <C-^><CR>           " go back to previously opened file
+nmap ;c :NeomakeClean<CR>   " clear neomake signs and column
 
 " Better split switching
 nnoremap <C-j> <C-W>j
