@@ -82,6 +82,7 @@ set wrap
 tnoremap <Esc> <C-\><C-n>   " swtich from TERMINAL mode to NORMAL
 nmap ;n :set nonumber<CR>   " set nonumber
 nmap ;6 <C-^><CR>           " go back to previously opened file
+nmap ;c :NeomakeClean<CR>   " clear neomake signs and column
 
 " Better split switching
 nnoremap <C-j> <C-W>j
@@ -109,6 +110,7 @@ autocmd FileType scala  setlocal sw=2 tabstop=2
 autocmd FileType sh     setlocal sw=2 tabstop=2
 autocmd FileType yaml   setlocal sw=2 tabstop=2
 autocmd FileType proto  setlocal sw=2 tabstop=2
+autocmd FileType c,cpp  setlocal sw=2 tabstop=2
 autocmd FileType html   setlocal sw=4 tabstop=4
 autocmd FileType js     setlocal sw=2 tabstop=2
 
@@ -270,12 +272,20 @@ let g:neomake_error_sign   = {'text': '✖', 'texthl': 'NeomakeErrorSign'}
 let g:neomake_warning_sign = {'text': '∆', 'texthl': 'NeomakeWarningSign'}
 let g:neomake_message_sign = {'text': '➤', 'texthl': 'NeomakeMessageSign'}
 let g:neomake_info_sign    = {'text': 'ℹ', 'texthl': 'NeomakeInfoSign'}
+"let g:neomake_go_enabled_makers = [ 'go', 'golangci_lint' ]
+"let g:neomake_go_golangci_lint_args = [
+  "\   'run',
+  "\   '--fast',
+  "\   '--out-format=line-number',
+  "\   '--print-issued-lines=false',
+  "\ ]
+  
 let g:neomake_go_enabled_makers = [ 'go', 'gometalinter' ]
 let g:neomake_go_gometalinter_maker = {
   \ 'args': [
   \   '--tests',
   \   '--enable-gc',
-  \   '--concurrency=3',
+  \   '--concurrency=4',
   \   '--fast',
   \   '-D', 'aligncheck',
   \   '-D', 'dupl',
