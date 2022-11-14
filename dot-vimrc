@@ -1,40 +1,36 @@
-""" ~/.config/nvim/init.vim """
+" 
+" neovim configuration file that on my typical development environment lives in
+" ~/.config/nvim/init.vim
+"
+set encoding=utf8
+scriptencoding utf8
 
 " =============================================================================================
-" Vundle
+" vim-plug
 " =============================================================================================
-set rtp+=~/.vim/bundle/Vundle.vim    " runtime path
-call vundle#begin()
 
-Plugin 'VundleVim/Vundle.vim'        " obviously
+call plug#begin('~/.config/nvim/plugged')
 
-Plugin 'derekwyatt/vim-scala'
-Plugin 'rust-lang/rust.vim'
-Plugin 'sebastianmarkow/deoplete-rust'
-Plugin 'fatih/vim-go'
-Plugin 'sudar/comments.vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'flazz/vim-colorschemes'
-Plugin 'tpope/vim-fugitive'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'majutsushi/tagbar'
-Plugin 'vim-airline/vim-airline'
-Plugin 'shougo/deoplete.nvim'
-Plugin 'zchee/deoplete-jedi'
-Plugin 'zchee/deoplete-go'
-Plugin 'uarun/vim-protobuf'
-Plugin 'chrisbra/csv.vim'
-Plugin 'neomake/neomake'
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
-Plugin 'elzr/vim-json'
-Plugin 'godoctor/godoctor.vim'
-Plugin 'sebdah/vim-delve'
-Plugin 'mileszs/ack.vim'
-Plugin 'davidhalter/jedi-vim'
-Plugin 'pangloss/vim-javascript'
+Plug 'altercation/vim-colors-solarized'
+Plug 'chrisbra/csv.vim'
+Plug 'elzr/vim-json'
+Plug 'fatih/vim-go'
+Plug 'flazz/vim-colorschemes'
+Plug 'majutsushi/tagbar'
+Plug 'mileszs/ack.vim'
+Plug 'neomake/neomake'
+" TODO: verify if this conflicts with other plugins
+" Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'sudar/comments.vim'
+Plug 'scrooloose/nerdtree'
+Plug 'tpope/vim-fugitive'
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+Plug 'vim-airline/vim-airline'
 
-call vundle#end() 
+"download from https://github.com/protocolbuffers/protobuf/blob/main/editors/proto.vim
+Plug '~/.config/nvim/plugged/protocolbuffers/proto.vim'
+
+call plug#end()
 
 
 " =============================================================================================
@@ -75,6 +71,7 @@ set title
 set ttimeoutlen=50
 set wildmenu            " visual autocomplete for command menu
 set wrap
+
 
 " -----------------------------------------------------
 " Nathan's key mapping overrides
@@ -172,34 +169,6 @@ nmap ;\ :TagbarToggle<CR>
 let g:UltiSnipsUsePythonVersion=3
 let g:UltiSnipsExpandTrigger = "<C-l>"
 "}}}
-"
-" -----------------------------------------------------
-" deoplete settings {{{
-" -----------------------------------------------------
-set completeopt+=noinsert
-set completeopt+=noselect
-set completeopt-=preview
-
-let g:python3_host_skip_check = 1
-if has('nvim')
-    let g:python_host_prog  = 'python2'
-    let g:python3_host_prog = 'python3'
-endif
-
-let g:deoplete#enable_at_startup = 1
-
-" deoplete-go settings
-let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
-let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
-let g:deoplete#sources#go#use_cache = 1
-"let g:deoplete#sources#go#json_directory = '/path/to/data_dir'
-
-" deoplete-rust settings
-let g:deoplete#sources#rust#racer_binary='/Users/nmurthy/.cargo/bin/racer'
-
-" deoplete-python settings
-" }}}
-
 
 " -----------------------------------------------------
 " vim-json settings
@@ -211,7 +180,7 @@ autocmd FileType json setlocal foldmethod=syntax
 " vim-go settings
 " -----------------------------------------------------
 let g:go_alternate_mode = "vsplit"
-let g:go_add_tags_transform="snakecase"
+let g:go_add_tags_transform = "camelcase"
 " More accurate than godoc but too slow
 " let g:go_info_mode="guru"
 let g:go_auto_sameids = 1
@@ -320,9 +289,4 @@ let b:csv_headerline = 1
 let g:ackprg = 'rg'
 "}}}
 
-" -----------------------------------------------------
-" jedi-vim settings {{{
-" -----------------------------------------------------
-let g:jedi#force_py_version = 3
-let g:jedi#completions_enabled = 0
-"}}}
+
