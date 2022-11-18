@@ -2,8 +2,6 @@
 " neovim configuration file that on my typical development environment lives in
 " ~/.config/nvim/init.vim
 "
-set encoding=utf8
-scriptencoding utf8
 
 " =============================================================================================
 " vim-plug
@@ -18,6 +16,7 @@ Plug 'fatih/vim-go'
 Plug 'flazz/vim-colorschemes'
 Plug 'majutsushi/tagbar'
 Plug 'mileszs/ack.vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'neomake/neomake'
 " TODO: verify if this conflicts with other plugins
 " Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -71,6 +70,9 @@ set title
 set ttimeoutlen=50
 set wildmenu            " visual autocomplete for command menu
 set wrap
+
+scriptencoding utf8
+
 
 
 " -----------------------------------------------------
@@ -177,27 +179,53 @@ autocmd FileType json setlocal foldmethod=syntax
 " }}}
 
 " -----------------------------------------------------
+" coc.vim
+" -----------------------------------------------------
+let g:coc_disable_startup_warning = 1
+" }}}
+
+" -----------------------------------------------------
 " vim-go settings
 " -----------------------------------------------------
-let g:go_alternate_mode = "vsplit"
 let g:go_add_tags_transform = "camelcase"
-" More accurate than godoc but too slow
-" let g:go_info_mode="guru"
+let g:go_alternate_mode = "vsplit"
 let g:go_auto_sameids = 1
 let g:go_auto_type_info = 1
-" let g:go_updatetime=1500
 let g:go_fmt_command = "goimports" " use goimports rather than gofmt on save
-let g:go_fmt_fail_silently=1
+let g:go_fmt_experimental = 1
+let g:go_fmt_fail_silently = 1
 let g:go_gocode_unimported_packages = 1
-let g:go_highlight_build_constraints = 1
-let g:go_highlight_fields = 1
+let g:go_list_type = "quickfix"
+let g:go_highlight_array_whitespace_error = 1
+let g:go_highlight_chan_whitespace_error = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_space_tab_error = 1
+let g:go_highlight_trailing_whitespace_error = 0
 let g:go_highlight_operators = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_parameters = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_generate_tags = 1
+let g:go_highlight_string_spellcheck = 1
+let g:go_highlight_format_strings = 1
+let g:go_highlight_variable_declarations = 1
+let g:go_highlight_variable_assignments = 1
+" let g:go_highlight_build_constraints = 1
+" let g:go_highlight_fields = 1
+" let g:go_highlight_operators = 1
 " let g:go_highlight_functions = 1
 " let g:go_highlight_interfaces = 1
 " let g:go_highlight_methods = 1
 " let g:go_highlight_types = 1
 " let g:go_highlight_extra_types = 1
-let g:go_list_type = "quickfix"
+let g:go_metalinter_autosave=1
+let g:go_metalinter_autosave_enabled=['golint', 'govet']
+" More accurate than godoc but too slow
+" let g:go_info_mode="guru"
+" let g:go_updatetime=1500
 let g:go_snippet_case_type = "camelcase"
 " let g:go_term_enabled=1 " run commands in a terminal rather than the quickfix window
 " let g:go_term_mode="split"
