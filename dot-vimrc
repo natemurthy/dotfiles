@@ -78,9 +78,14 @@ scriptencoding utf8
 " -----------------------------------------------------
 " Nathan's key mapping overrides
 " -----------------------------------------------------
+" See https://vim.fandom.com/wiki/Mapping_keys_in_Vim_-_Tutorial_(Part_1)#Listing_key_maps
+
 tnoremap <Esc> <C-\><C-n>   " swtich from TERMINAL mode to NORMAL
-nmap ;n :set nonumber<CR>   " set nonumber
+
+" https://github.com/neoclide/coc.nvim/issues/3044, coc uses <C-o>
+nmap <C-t> <C-o>            " go back to previous definition cursor
 nmap ;6 <C-^><CR>           " go back to previously opened file
+nmap ;n :set nonumber<CR>   " set nonumber
 nmap ;c :NeomakeClean<CR>   " clear neomake signs and column
 
 " Better split switching
