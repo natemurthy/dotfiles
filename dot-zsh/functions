@@ -2,15 +2,30 @@
 # ZSH prestart
 # =============================================================================================
 
-# cmd line prompt
-function precmd {
-  if [[ $USER == "nmurthy" ]]; then
-    # Company machine has a big lame immutable host name so don't include it
-    PS1="%{$fg[cyan]%}%n%{$fg[default]%}:%1~\$ "
-  else 
-    PS1="%{$fg[cyan]%}%n@%{$fg[default]%}%m:%1~\$ "
-  fi
-}
+# my old way of formating cmd line prompt
+#function precmd {
+  #if [[ $USER == "nathan" ]]; then
+    ## Company machine has a big lame immutable host name so don't include it
+    #PS1="%{$fg[cyan]%}%n%{$fg[default]%}:%1~\$ "
+  #else 
+    #PS1="%{$fg[cyan]%}%n@%{$fg[default]%}%m:%1~\$ "
+  #fi
+#}
+
+autoload -Uz vcs_info
+
+precmd_vcs_info() { vcs_info }
+precmd_functions+=( precmd_vcs_info )
+
+setopt PROMPT_SUBST # set up prompt with git branch name
+# https://www.ditig.com/256-colors-cheat-sheet
+NEWLINE=$'\n'
+PROMPT='${NEWLINE}%F{039}%n%f in %F{202}${PWD/#$HOME/~}%f ${vcs_info_msg_0_}
+%{$fg[gray]%}> %{$reset_color%}'
+
+# Format the vcs_info_msg_0_ variable
+# TODO: https://github.com/agnoster/agnoster-zsh-theme (for branch icon from powerline font)
+zstyle ':vcs_info:git:*' formats '(on %F{002}%b%f)'
 
 # =============================================================================================
 # FZF helpers
