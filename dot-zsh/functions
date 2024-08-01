@@ -21,7 +21,7 @@ setopt PROMPT_SUBST # set up prompt with git branch name
 # https://www.ditig.com/256-colors-cheat-sheet
 NEWLINE=$'\n'
 PROMPT='${NEWLINE}%F{039}%n%f in %F{202}${PWD/#$HOME/~}%f ${vcs_info_msg_0_}
-%{$fg[gray]%}> %{$reset_color%}'
+%{$fg[white]%}> %{$reset_color%}'
 
 # Format the vcs_info_msg_0_ variable
 # TODO: https://github.com/agnoster/agnoster-zsh-theme (for branch icon from powerline font)
