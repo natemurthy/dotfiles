@@ -14,6 +14,8 @@ Plug 'chrisbra/csv.vim'
 Plug 'elzr/vim-json'
 Plug 'fatih/vim-go'
 Plug 'flazz/vim-colorschemes'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 Plug 'majutsushi/tagbar'
 Plug 'mileszs/ack.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -65,7 +67,7 @@ set smartcase           " Make search case sensitive only if it contains upperca
 set smartcase           " match 'word' case-insensitive / 'Word' case-sensitive
 set splitbelow          " Splitting a window will put the new window below the current
 set splitright          " Splitting a window will put the new window right of the current
-set textwidth=96        " maximum line width
+set textwidth=120       " maximum line width
 set title
 set ttimeoutlen=50
 set wildmenu            " visual autocomplete for command menu
@@ -97,7 +99,7 @@ nnoremap <C-l> <C-W>l
 " -----------------------------------------------------
 " fzf (installed via homebrew)
 " -----------------------------------------------------
-set rtp+=/usr/local/opt/fzf
+set rtp+=/opt/homebrew/bin/fzf
 nmap <C-f> :FZF<CR>
 
 " -----------------------------------------------------
@@ -293,13 +295,15 @@ xmap ac <Plug>(coc-classobj-a)
 omap ac <Plug>(coc-classobj-a)
 
 " Remap <C-f> and <C-b> for scroll float windows/popups.
+" Disabling these <C-f> interferes with :FZF key mapping
+" And because Fn + Up and Fn + Down are already cover the scroll operations
 if has('nvim-0.4.0') || has('patch-8.2.0750')
-  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
-  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  "nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  "nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  "inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  "inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  "vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  "vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 endif
 
 " Use CTRL-S for selections ranges.
@@ -341,6 +345,13 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 let g:coc_disable_startup_warning = 1
 " }}}
+
+" -----------------------------------------------------
+" python provider settings
+" -----------------------------------------------------
+" https://neovim.io/doc/user/provider.html
+"let g:loaded_python3_provider = 1
+let g:python3_host_prog = '/Users/nathan/.pyenv/versions/verse-dev-3.11.2/bin/python3'
 
 " -----------------------------------------------------
 " vim-go settings
@@ -474,4 +485,3 @@ let b:csv_headerline = 1
 " Use rg instead of ack (it's 10x faster)
 let g:ackprg = 'rg'
 "}}}
-
