@@ -9,17 +9,29 @@
 
 call plug#begin('~/.config/nvim/plugged')
 
+" avante.nvim deps (required + optional), see https://github.com/yetone/avante.nvim?tab=readme-ov-file#installation
+"Plug 'HakonHarnes/img-clip.nvim'
+"Plug 'hrsh7th/nvim-cmp'
+"Plug 'MunifTanjim/nui.nvim'
+"Plug 'nvim-lua/plenary.nvim'
+"Plug 'nvim-tree/nvim-web-devicons'
+"Plug 'stevearc/dressing.nvim'
+"Plug 'zbirenbaum/copilot.lua'
+
 Plug 'altercation/vim-colors-solarized'
 Plug 'chrisbra/csv.vim'
 Plug 'elzr/vim-json'
+Plug 'f-person/git-blame.nvim'
 Plug 'fatih/vim-go'
 Plug 'flazz/vim-colorschemes'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'jvirtanen/vim-hcl'
 Plug 'majutsushi/tagbar'
 Plug 'mileszs/ack.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'neomake/neomake'
+Plug 'numToStr/Comment.nvim'
 " TODO: verify if this conflicts with other plugins
 " Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'sudar/comments.vim'
@@ -27,6 +39,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-fugitive'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'vim-airline/vim-airline'
+"Plug 'yetone/avante.nvim', { 'branch': 'main', 'do': 'make' }
 
 "download from https://github.com/protocolbuffers/protobuf/blob/main/editors/proto.vim
 Plug '~/.config/nvim/plugged/protocolbuffers/proto.vim'
@@ -180,10 +193,18 @@ let g:UltiSnipsExpandTrigger = "<C-l>"
 "}}}
 
 " -----------------------------------------------------
-" vim-json settings
+" vim-json settings {{{
 " -----------------------------------------------------
 autocmd FileType json setlocal foldmethod=syntax
 " }}}
+
+" -----------------------------------------------------
+" f-person/git-blame.nvim settings {{{
+" -----------------------------------------------------
+" https://github.com/f-person/git-blame.nvim?tab=readme-ov-file#enabled
+"let g:gitblame_enabled = 0 
+let g:gitblame_message_template = '<author> • <sha> • <summary> • <date>'
+"}}}
 
 " -----------------------------------------------------
 " coc.vim
@@ -485,3 +506,20 @@ let b:csv_headerline = 1
 " Use rg instead of ack (it's 10x faster)
 let g:ackprg = 'rg'
 "}}}
+
+" -----------------------------------------------------
+" avante.nvim settings {{{
+" -----------------------------------------------------
+" FIXME
+"autocmd! User avante.nvim
+"lua << EOF
+"require('avante_lib').load()
+"require('avante').setup()
+"EOF
+"}}}
+
+" -----------------------------------------------------
+" numToStr/Comment.nvim {{{
+" -----------------------------------------------------
+lua require('Comment').setup()
+" }}}
