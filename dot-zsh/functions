@@ -192,18 +192,20 @@ gw() {
     return 1
   fi
 
-  # Get the repository name from the current directory
-  local repo_name=$(basename "$(pwd)")
+  # Get the main worktree path (the original repo)
+  local main_worktree=$(git worktree list | head -n 1 | awk '{print $1}')
+  local repo_name=$(basename "$main_worktree")
+  
   local branch_name="$1"
   # Replace slashes with hyphens for the directory name
   local dir_name="${branch_name//\//-}"
-  local worktree_path="../${repo_name}-${dir_name}"
+  local worktree_path="$(dirname "$main_worktree")/${repo_name}-${dir_name}"
 
   # Create the worktree
   if git worktree add -b "$branch_name" "$worktree_path"; then
     # Change to the new worktree directory
     cd "$worktree_path" || return 1
-    echo "\n✓ Switched to worktree: $(pwd)"
+    echo "✓ Switched to worktree: $(pwd)"
   else
     echo "Error: Failed to create worktree" >&2
     return 1
