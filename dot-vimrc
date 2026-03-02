@@ -133,6 +133,9 @@ autocmd FileType c,cpp  setlocal sw=2 tabstop=2
 autocmd FileType html   setlocal sw=4 tabstop=4
 autocmd FileType js     setlocal sw=2 tabstop=2
 
+set nofoldenable
+autocmd FileType go,python,rust,typescript,scala,java setlocal foldmethod=indent foldlevelstart=99
+
 
 " =============================================================================================
 " Background and Colorscheme
@@ -183,6 +186,7 @@ let g:NERDTreeHighlightCursorline=0
 " tagbar settings {{{
 " -----------------------------------------------------
 nmap ;\ :TagbarToggle<CR>
+let g:tagbar_ctags_bin = '/opt/homebrew/bin/ctags'  " requires `brew install universal-ctags`
 " }}}
 
 " -----------------------------------------------------
